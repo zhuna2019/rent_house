@@ -1,18 +1,42 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- 搜索框 -->
+     <mt-search v-model="value" id="search"></mt-search>
+    <!-- 轮播图 -->
+     <carousel></carousel>
+  
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
+import Carousel from '../components/Carousel'
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
+  data(){
+    return{
+      value:""
+    }
+  },
+  components:{
+   Carousel,
+    
   }
 }
 </script>
+<style scoped>
+.home{
+  position: relative;
+}
+#search{
+  width:380px;
+ position:absolute;
+  top:0px;
+  left:0px; 
+}
+carousel{
+  position:absolute;
+  top:80px;
+
+}
+</style>
+
