@@ -16,8 +16,8 @@
             </select> 
         
         </div>
-        <div class="houses-item" v-for="(item,i) in list" :key="(i)">
-            <img :src="`http://127.0.0.1:3000/${item.pic}`"  @click="jump" alt="">
+        <div class="houses-item" v-for="(item,i) in list" :key="(i)" >
+            <img :src="`http://127.0.0.1:3000/${item.pic}`"   alt="">
             <div class="house-spec">
                 <h4 v-text="item.housename"></h4>
                 <span v-text="item.house_area"></span>
@@ -26,6 +26,7 @@
                 <div class="app-price">
                    <p class="price" v-text="`${item.price.toFixed(2)}`"></p>
                    <p>元/月</p>
+                    <router-link class="btn btn-primary" :to="`/Detail/${item.href.split('=')[1]}`">查看详情</router-link>
                    <!-- @click="collection" -->
                    <mt-button style="margin-left:4px" @click="addCollect" :data-hid="item.hid"
                    :data-housename="item.housename" 
@@ -75,9 +76,7 @@ export default {
         }
     },
     methods: {
-        jump(){
-            this.$router.push("/Houseinfo")
-        },
+       
         // 条件查询方法
         // queryByTask(e){
         //     let tar=e.target;
@@ -179,6 +178,7 @@ export default {
         }, 
     },
     created() {
+       
         if(!this.qCon){
         this.loadMore();
         }else{
@@ -187,7 +187,7 @@ export default {
         // console.log("1:created 组件创建成功")
     },
     mounted() {
-
+  
     },
     
 }

@@ -34,9 +34,11 @@ Vue.use(Vuex)
 import Home from './views/Home.vue'
 import Mine from './views/Mine.vue'
 import Collection from './views/Collection.vue'
+import Order from './views/Order.vue'
 Vue.component("apphome",Home);
 Vue.component("appmine",Mine);
 Vue.component("appcollection",Collection);
+Vue.component("appOrder",Order);
 // 11创建Vuex存储实例对象
 var store=new Vuex.Store({
   state:{cartCount:0},

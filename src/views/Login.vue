@@ -55,7 +55,7 @@ export default {
             var reg=/^[a-z0-9]{3,12}$/i
             // 3~12 字母或者数字
             //console.log(reg.test(u_code))
-            if(!reg.test(u_code)){
+            if(this.inputCode!=this.identifyCode){
                 this.$toast("验证码不正确");
                 return;
             }
@@ -88,7 +88,7 @@ export default {
                 else{
                     this.$toast("登录成功");
                     //Vue中组件之间的跳转的方法
-                    this.$router.push("/Mine");
+                    this.$router.push("/");
                 }
             })
         },

@@ -1,6 +1,12 @@
 <template>
   <div class="">
-    <div class="collect">我的收藏</div>
+    <mt-header title="米兔·收藏" id="header">
+            <router-link to="/" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
+            <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    
     <div class="selectAll">
       全选<input type="checkbox" @click="selectAll" v-model="cb">
     </div>
@@ -18,7 +24,6 @@
         <span>({{$store.getters.getCartCount}})</span>
         <mt-button @click="delMitem" type="danger"> 删除选中的房源</mt-button>
       </div>
-      <router-link to='Home' class="home"> <div>返回首页</div></router-link>
   </div>
 </template>
 <script>
@@ -144,6 +149,12 @@
   }  
 </script>
 <style scoped>
+#header{
+    background:#eee;
+    color:#000;
+    font-size:18px;
+   margin-bottom:1rem;
+    }
 .home{
   font-size:26px;
 }

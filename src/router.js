@@ -5,7 +5,8 @@ import Home from './views/Home.vue'
 import Products from './views/Products.vue'
 import Houseinfo from './views/Houseinfo.vue'
 import Mine from './views/Mine.vue'
-
+import Detail from './views/Detail.vue'
+import Order from './views/Order.vue'
 
 
 Vue.use(Router)
@@ -15,8 +16,10 @@ export default new Router({
     {path: '/',name: 'tablebar',component:TableBar},
     {path: '/home',name: 'home',component:Home},
     {path: '/products',name:'products',component:Products,props:true},
-    {path: '/Houseinfo',name:'products',component:Houseinfo,props:true},
-    {path: '/Mine',name:'products',component:Mine},
+    {path: '/Houseinfo',name:'Houseinfo',component:Houseinfo,props:true},
+    {path: '/Mine',name:'Mine',component:Mine},
+    {path: '/Detail/:did',name:'Detail',component:Detail,props:true},
+    {path: '/Order',name:'Order',component:Order},
     {
       path: '/Collection',
       name: 'Collection',

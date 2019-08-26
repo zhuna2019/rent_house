@@ -11,24 +11,24 @@
             <div>优惠券</div>
         </div>
         <div class="nav">
-            <img src="../assets/hide.png" alt="">
+           <router-link to="/Collection"> <img src="../assets/hide.png" alt=""></router-link>
             <div>收藏</div>
         </div>
         <div class="nav">
-            <img src="../assets/time.png" alt="">
-            <div>浏览历史</div>
+             <img src="../assets/time.png" alt="">
+            <div>浏览过</div>
         </div>
         <div class="nav">
-            <img src="../assets/mesg.png" alt="">
-            <div>常用信息</div>
+            <router-link to="/Order"><img src="../assets/mesg.png" alt=""></router-link>
+            <div>订单</div>
         </div>
         <div class="nav">
             <img src="../assets/server.png" alt="">
-            <div>在线客服</div>
+            <div>客服</div>
         </div>
         <div class="nav">
             <img src="../assets/money.png" alt="">
-            <div>开具发票</div>
+            <div>开发票</div>
         </div>
     </div>
     <div class="middle2">

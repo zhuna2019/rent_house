@@ -13,6 +13,10 @@
               <appcollection></appcollection>
           </mt-tab-container-item>
           <!--子面板3-->
+          <mt-tab-container-item id="order">
+            <appOrder></appOrder>
+          </mt-tab-container-item>
+          <!--子面板4-->
           <mt-tab-container-item id="mine">
             <appmine></appmine>
           </mt-tab-container-item>
@@ -34,8 +38,13 @@
             收藏
         </mt-tab-item>
         <!--第三个我的按钮 -->
-         <mt-tab-item id="mine" @click.native="changeState(2)">
-           <imagbar :selectedImage="require('../assets/05.png')" :normalImage="require('../assets/5.png')" :focused="currentIndex[2].is_select"></imagbar>  
+         <mt-tab-item id="order" @click.native="changeState(2)">
+           <imagbar :selectedImage="require('../assets/03.png')" :normalImage="require('../assets/3.png')" :focused="currentIndex[2].is_select"></imagbar>  
+             订单
+        </mt-tab-item>
+        <!--第四个我的按钮 -->
+         <mt-tab-item id="mine" @click.native="changeState(3)">
+           <imagbar :selectedImage="require('../assets/05.png')" :normalImage="require('../assets/5.png')" :focused="currentIndex[3].is_select"></imagbar>  
              我的
         </mt-tab-item>
 
@@ -53,6 +62,7 @@ export default {
            active:"home",
            currentIndex:[
                {is_select:true},
+               {is_select:false},
                {is_select:false},
                {is_select:false},
            ]

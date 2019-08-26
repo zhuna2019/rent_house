@@ -149,7 +149,7 @@ app.get("/houses",(req,res)=>{
   // 5：对pageSize转换整形防止nodejs报错
      ps=parseInt(ps);
   // 6：创建sql语句
-     var sql=`SELECT hid,price,housename,promise,spec,pic,house_area FROM rent_house LIMIT ?,?`;
+     var sql=`SELECT hid,price,housename,promise,spec,pic,house_area,href FROM rent_house LIMIT ?,?`;
      console.log(req.query)
   // 7：通过连接池发送sql语句
      pool.query(sql,[offset,ps],(err,result,)=>{
@@ -167,7 +167,7 @@ app.get("/houses",(req,res)=>{
         var ps = req.query.pageSize;
         var conditions=req.query.conditions;
         // var uid=req.session.uid;
-        console.log(conditions) 
+      //   console.log(conditions) 
      // 3：设置默认值   pno：1    pagesize：4
         if(!p){p=1};
         if(!ps){ps=4};
@@ -183,15 +183,15 @@ app.get("/houses",(req,res)=>{
             sql=`SELECT hid,price,housename,promise,spec,pic,house_area FROM rent_house `;
             sql+=`WHERE house_area= ? LIMIT ?,?`;
         // }
-        console.log(sql)
-        console.log(conditions) 
+      //   console.log(sql)
+      //   console.log(conditions) 
      // 7：通过连接池发送sql语句
         pool.query(sql,[conditions,offset,ps],(err,result)=>{
            if(err)throw err;
            // 8：获取数据库返回的查询结果
            // 9：将差查询结果发送给客户端
            res.send({code:1,msg:"查询成功",data:result});
-           console.log(result,sql)
+         //   console.log(result,sql)
         })
      })
   //******************** */
@@ -308,26 +308,14 @@ app.get("/select",(req,res)=>{
 
 // 功能7：加载指定商品的详情页
 app.get("/query",(req,res)=>{
-   let hid=req.query.hid;
+   let did=req.query.did;
    console.log(req.query)
-   var sql="SELECT price,housename,promise,spec,pic,house_area FROM rent_house WHERE hid = ?"
-   pool.query(sql,[hid],(err,result)=>{
+   var sql="SELECT title,price,rent_mode,area,layout,remark,Suitable,bed,avatar,type FROM rent_detail WHERE did = ?"
+   pool.query(sql,[did],(err,result)=>{
    if(err)throw err;
-   console.log(result)
+   // console.log(result)
    res.send({code:1,msg:"查询成功",data:result})
    })
    })
-   
-   // 功能7：加载指定商品的详情页
-   app.get("/query",(req,res)=>{
-   let hid=req.query.hid;
-   console.log(req.query)
-   var sql="SELECT price,housename,promise,spec,pic,house_area FROM rent_house WHERE hid = ?"
-   pool.query(sql,[hid],(err,result)=>{
-   if(err)throw err;
-   console.log(result)
-   res.send({code:1,msg:"查询成功",data:result})
-   })
-   })
-  
+ 
   
