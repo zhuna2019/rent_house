@@ -9,9 +9,9 @@
 
           </mt-tab-container-item>
           <!--子面板2-->
-          <mt-tab-container-item id="love">    
+          <!-- <mt-tab-container-item id="love">    
               <appcollection></appcollection>
-          </mt-tab-container-item>
+          </mt-tab-container-item> -->
           <!--子面板3-->
           <mt-tab-container-item id="order">
             <appOrder></appOrder>
@@ -33,18 +33,18 @@
         
       <!--第二个收藏按钮 -->
         
-        <mt-tab-item id="love" @click.native="changeState(1)">
+        <!-- <mt-tab-item id="love" @click.native="changeState(1)">
            <imagbar :selectedImage="require('../assets/01.png')" :normalImage="require('../assets/1.png')" :focused="currentIndex[1].is_select"></imagbar>  
             收藏
-        </mt-tab-item>
+        </mt-tab-item> -->
         <!--第三个我的按钮 -->
-         <mt-tab-item id="order" @click.native="changeState(2)">
-           <imagbar :selectedImage="require('../assets/03.png')" :normalImage="require('../assets/3.png')" :focused="currentIndex[2].is_select"></imagbar>  
+         <mt-tab-item id="order" @click.native="changeState(1)">
+           <imagbar :selectedImage="require('../assets/03.png')" :normalImage="require('../assets/3.png')" :focused="currentIndex[1].is_select"></imagbar>  
              订单
         </mt-tab-item>
         <!--第四个我的按钮 -->
-         <mt-tab-item id="mine" @click.native="changeState(3)">
-           <imagbar :selectedImage="require('../assets/05.png')" :normalImage="require('../assets/5.png')" :focused="currentIndex[3].is_select"></imagbar>  
+         <mt-tab-item id="mine" @click.native="changeState(2)">
+           <imagbar :selectedImage="require('../assets/05.png')" :normalImage="require('../assets/5.png')" :focused="currentIndex[2].is_select"></imagbar>  
              我的
         </mt-tab-item>
 
@@ -64,7 +64,7 @@ export default {
                {is_select:true},
                {is_select:false},
                {is_select:false},
-               {is_select:false},
+              //  {is_select:false},
            ]
         }
     },

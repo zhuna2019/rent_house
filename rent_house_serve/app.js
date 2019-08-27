@@ -310,7 +310,7 @@ app.get("/select",(req,res)=>{
 app.get("/query",(req,res)=>{
    let did=req.query.did;
    console.log(req.query)
-   var sql="SELECT title,price,rent_mode,area,layout,remark,Suitable,bed,avatar,type FROM rent_detail WHERE did = ?"
+   var sql="SELECT title,price,rent_mode,area,layout,remark,Suitable,bed,avatar,type,img_url FROM rent_detail WHERE did = ?"
    pool.query(sql,[did],(err,result)=>{
    if(err)throw err;
    // console.log(result)
@@ -318,4 +318,42 @@ app.get("/query",(req,res)=>{
    })
    })
  
-  
+// 功能8：将客户订单插入数据库
+app.post("/order",(req,res)=>{
+   //获取当前登录用户的id值
+   var uid=req.session.uid
+   if(!uid){
+      res.send({code:-1,msg:"请登录"})
+      return;
+   }
+   var obj = req.body;
+    console.log(obj)
+   //2:sql:查询sql语句
+   //数据库 库名 表名 列名 小写字母
+   var sql = "insert into rh_order_detail set ?";
+   //3:json:{code:1,msg:"登录成功"}
+   pool.query(sql,[obj],(err,result)=>{
+      //执行sql语句回调函数
+      if(err){
+         throw err;
+      }else{
+         res.send({code:1,msg:"插入成功"})
+      }
+      //判断   
+   })
+ });
+ // 功能9：客户查询订单插入数据库
+
+ app.get("/getOrder",(req,res)=>{
+   var uid=req.session.uid
+   if(!uid){
+      res.send({code:-1,msg:"请登录"})
+      return;
+   }
+   var sql="SELECT did,order_id,title,img_url,inyear,inmonth,indate,outyear,outmonth,outdate FROM rh_order_detail"
+   pool.query(sql,(err,result)=>{
+   if(err)throw err;
+   // console.log(result)
+   res.send({code:1,msg:"查询成功",data:result})
+   })
+   })

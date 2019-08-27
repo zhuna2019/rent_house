@@ -9,12 +9,12 @@
             <mt-button icon="more" slot="right"></mt-button>
           </mt-header>
         </div>
-        <div class="top_img"><img src="http://127.0.0.1:3000/07.jpg" alt=""></div>
+        <div class="top_img"><img  :src="`http://127.0.0.1:3000/${list.img_url}`" ></div>
         <!-- PRO -->
         <div id="detail"  >
             <div>
             <div><h1>优选<span style="color:red">P</span>RO.</h1></div>
-            <div class="mainTitle" data-title="list.title">{{list.title}}</div>
+            <div class="mainTitle" >{{list.title}}</div>
             <div class="types">
                 <div class="house">
                     <div><img src="../assets/house.png" alt=""></div>
@@ -36,6 +36,58 @@
         <!-- 优惠 -->
         <div class="discount">
             <span class="count">连住优惠</span> <span>满3天9.9折，7天9.2折，30天8.5折</span>
+        </div>
+        
+        <div>
+            <!-- 选择入住时间 -->
+            <div class="selector selectYear" @click="selectYear">
+                <!-- 入住时间 -->
+                <div class="show_year">
+                    <p v-if="!isClicked">选择入住日期</p>
+                    <span>入住时间:</span>
+                    <span v-if="isClicked">{{inyear}}年</span>
+                    <span v-if="isClicked">{{inmonth}}月</span>
+                    <span v-if="isClicked">{{indate}}日</span>
+                    <i class="icon"></i>
+                </div> 
+            </div>
+            <!-- 选择离开时间 -->
+            <div class="selector selectYear" @click="selectOutYear">
+                <!-- 离开时间 -->
+                <div class="show_year">
+                    <p v-if="!isClicked">选择离开日期</p>
+                    <span>离开时间:</span>
+                    <span v-if="isClicked">{{outyear}}年</span>
+                    <span v-if="isClicked">{{outmonth}}月</span>
+                    <span v-if="isClicked">{{outdate}}日</span>
+                    <i class="icon"></i>
+                </div> 
+            </div>
+            
+            <div> 
+                <mt-datetime-picker 
+                v-model="dateValue" 
+                type="date" 
+                ref="datePicker" 
+                year-format="{value} 年" 
+                month-format="{value} 月" 
+                date-format="{value} 日" 
+                :startDate="new Date()" 
+                @confirm="handleConfirm">
+                </mt-datetime-picker>
+            </div>
+            <div> 
+                <mt-datetime-picker 
+                v-model="outdateValue" 
+                type="date" 
+                ref="date2Picker" 
+                year-format="{value} 年" 
+                month-format="{value} 月" 
+                date-format="{value} 日" 
+                :startDate="new Date()" 
+                @confirm="handle2Confirm">
+                </mt-datetime-picker>
+            </div>
         </div>
         <!-- 房东 -->
         <div class="houser">
@@ -76,8 +128,8 @@
         </div>
        <!-- 下订单 -->
        <div class="btn">
-           <div>￥216</div>
-           <div @click="order">立即预定</div>
+           <div>￥{{list.price}}</div>
+           <div @click="order" :data-title="list.title"  :data-img="list.img_url" :data-price="list.price">立即预定</div>
        </div>
     </div>
 </template>
@@ -152,17 +204,60 @@ h4{
     padding:1.5rem;
     background:rgb(5, 124, 55);
 }
+#day{
+    padding:0.1rem;
+    background:rgb(5, 124, 55);
+    color:#fff;
+    font-size:14px;
+    font-weight: bolder;
+}
+.show_yea{
+    display:flex;
+}
 </style>
 <script>
+// 引入qs模块 初始化post 要传递的参数兑现
+import qs from 'qs';
 export default {
     data(){
         return{
-          list:{}
+          list:{},
+          inyear:"",
+          inmonth:"",
+          indate:"",
+          dateValue:"",
+          outyear:"",
+          outmonth:"",
+          outdate:"",
+          outdateValue:"",
+          isClicked:false
         }
     },
     props:["did"],
     methods:{
-        load(){
+        // 选择入住时间
+            selectYear () {
+                this.$refs.datePicker.open();
+            },
+            handleConfirm (value) {
+                console.log(value);
+                this.inyear = value.getFullYear();
+                this.inmonth = value.getMonth() + 1;
+                this.indate = value.getDate();
+                this.isClicked = true;
+                },
+            // 选择离开时间
+            selectOutYear () {
+            this.$refs.date2Picker.open();
+            },
+            handle2Confirm (value) {
+            console.log(value);
+            this.outyear = value.getFullYear();
+            this.outmonth = value.getMonth() + 1;
+            this.outdate = value.getDate();
+            this.isClicked = true;
+            },
+         load(){
             if(this.did){
                 this.axios.get("query",{params:{did:this.did}}).then(result=>{
                      console.log(result.data.data[0])
@@ -170,8 +265,29 @@ export default {
                 })
             }
         },
-        order(){
-           
+        order(e){
+            var order_id=Math.floor(Math.random()*9999999999);
+            var inyear=this.inyear;
+            var inmonth=this.inmonth;
+            var indate=this.indate;
+            var outyear=this.outyear;
+            var outmonth=this.outmonth;
+            var outdate=this.outdate;
+            var title=e.target.dataset.title;
+            var img_url=e.target.dataset.img;
+            var price=e.target.dataset.price;
+            var obj={order_id,title,img_url,price,inyear,inmonth,indate,outyear,outmonth,outdate}
+            var url="order"
+            this.axios.post(url,qs.stringify(obj)).then(res=>{
+                // console.log(res)
+                if(res.data.code===-1){
+                    this.$toast("请先登录")
+                   this.$router.push("/Login");
+                }
+                if(res.data.code===1){
+                   this.$toast("已成功订入");
+                }
+            })
         },
     },
     created(){

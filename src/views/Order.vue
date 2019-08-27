@@ -6,30 +6,31 @@
             </router-link>
             <mt-button icon="more" slot="right"></mt-button>
        </mt-header>
-       <div class="title">【一屋·恋樱】翠湖旁/150寸家庭影院</div>
-       <div class="top_img">
-           <img src="http://127.0.0.1:3000/07.jpg" alt="">
-           <div class="orderBar">
-           <!-- 到店日期 -->
-                <div class="check_in">
-                        <div>08月26日</div>
-                        <div>周一14:00</div>
+       <div class="Or" v-for="(item,i) of list" :key="i">
+            <div class="title">{{item.title}}</div>
+            <div class="top_img">
+                <img :src="`http://127.0.0.1:3000/${item.img_url}`" alt="">
+                <div class="orderBar">
+                <!-- 到店日期 -->
+                        <div class="check_in">
+                                <div>{{item.inmonth}}月{{item.indate}}日</div>
+                        </div>
+                        <div><img src="http://127.0.0.1:3000/right.png" alt=""></div>
+                        <!-- 离店日期 -->
+                        <div class="leave">
+                            <div>{{item.outmonth}}月{{item.outdate}}日</div>
+                            
+                        </div>
+                        <!-- 支付金额 -->
+                        <div class="pay">
+                            <div>已支付总价</div>
+                            <div class="price">￥{{outmonth===inmonth?(outdate-indate)*price:inmonth}}</div>
+                        </div>
                 </div>
-                <div><img src="http://127.0.0.1:3000/right.png" alt=""></div>
-                <!-- 离店日期 -->
-                <div class="leave">
-                    <div>08月27日</div>
-                    <div>周一12:00</div>
-                </div>
-                <!-- 支付金额 -->
-                <div class="pay">
-                    <div>支付总价</div>
-                    <div class="price">￥439.00</div>
-                </div>
-           </div>
-       </div>
-       <div class="all">查看全部订单</div>
-       
+            </div>
+            
+      </div>
+      <div class="all">查看全部订单</div> 
   </div>
 </template>
 <style scoped>
@@ -79,7 +80,29 @@
 </style>
 <script>
 export default {
-    
+   data(){
+       return{
+           list:[]
+       }
+   },
+   methods:{
+       load(){
+           var url="getOrder"
+           this.axios.get(url).then(res=>{
+               if(res.code==-1){
+                   this.$toast("请先登录");
+                   this.$router.push("/Login")
+               }
+               if(res.code==1){
+                //    console.log(res.data.data)
+                  this.list=res.data.data
+               }
+           })
+       },
+   },
+   created(){
+       this.load()
+   }
 }
 </script>
 
