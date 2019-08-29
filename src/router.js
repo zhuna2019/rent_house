@@ -7,6 +7,7 @@ import Houseinfo from './views/Houseinfo.vue'
 import Mine from './views/Mine.vue'
 import Detail from './views/Detail.vue'
 import Order from './views/Order.vue'
+import Reg from './views/Reg.vue'
 
 
 Vue.use(Router)
@@ -20,6 +21,7 @@ export default new Router({
     {path: '/Mine',name:'Mine',component:Mine},
     {path: '/Detail/:did',name:'Detail',component:Detail,props:true},
     {path: '/Order',name:'Order',component:Order},
+    {path: '/Reg',name:'Reg',component:Reg},
     {
       path: '/Collection',
       name: 'Collection',

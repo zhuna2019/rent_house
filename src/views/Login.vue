@@ -86,7 +86,10 @@ export default {
                 }
                 //7.2:登录成功  提示
                 else{
-                    this.$toast("登录成功");
+                     this.$toast("登录成功");
+                    this.$store.commit("changeUser",{uid:res.data.uid,uname:this.uname});
+                    localStorage.setItem('uid',res.data.uid)
+                    localStorage.setItem('uname',this.uname)
                     //Vue中组件之间的跳转的方法
                     this.$router.push("/");
                 }

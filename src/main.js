@@ -41,14 +41,25 @@ Vue.component("appcollection",Collection);
 Vue.component("appOrder",Order);
 // 11创建Vuex存储实例对象
 var store=new Vuex.Store({
-  state:{cartCount:0},
+  state:{
+    cartCount:0,
+    user:{
+      uid:'',
+      uname:""
+      }, //本地存储用户信息
+      isLogin:"", //登录状态
+      },
   mutations:{
     increment(state){//购物车数量加一
         state.cartCount++;
     },
     clear(state){
         state.cartCount=0;
-    }
+    },
+    changeUser(state,user){
+        state.user.uid=user.uid;
+        state.user.uname=user.uname;
+    },
   },
   getters:{
     getCartCount(state){
@@ -65,5 +76,11 @@ Vue.config.productionTip = false
 new Vue({
   router,
   render: h => h(App),
-  store
+  store,
+  created() {
+    if(localStorage.getItem("uname")===null){
+    localStorage.setItem("uname","");
+    }
+    this.$store.state.uid = localStorage.getItem('uname')
+    }
 }).$mount('#app')
