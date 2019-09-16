@@ -35,7 +35,8 @@ export default {
             upwd:"",
             identifyCodes: "1234567890abcdefghijklmnopqrstuvwxyz",
             identifyCode: "",//四个验证码，用于和用户输入验证码进行比对
-            inputCode:""
+            inputCode:"",
+           canClick=true
         }
     },
     //注册随机验证码组件
@@ -76,7 +77,11 @@ export default {
             var obj={uname:u_name,upwd:u_pwd}
             //this.axios.get(url,{params:obj}).then
             // this.axios.post(url,{params:obj}).then
-            this.axios.post(url,qs.stringify(obj)).then
+            //为按钮绑定事件，实现事件节流
+            
+            if(this.canClick){
+                canClick=false;
+                this.axios.post(url,qs.stringify(obj)).then
             (res=>{
                 //7 获取服务器的返回结果
                 console.log(res.data)
@@ -93,7 +98,9 @@ export default {
                     //Vue中组件之间的跳转的方法
                     this.$router.push("/");
                 }
+                this.canClick=true;
             })
+            }
         },
         //获取验证码
         randomNum(min, max) {

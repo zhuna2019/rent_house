@@ -158,6 +158,7 @@ export default {
             type1:0,
             type2:0,
             type3:0,
+            canClick:true
         }
     },
     methods: {
@@ -172,7 +173,10 @@ export default {
                 this.$toast("请输入相关信息再点击注册")
                 return;
             }
-            this.axios.post(url,qs.stringify(obj))
+            //为点击绑定节流事件
+           if(this.canClick==true){
+               this.canClick=false;
+                this.axios.post(url,qs.stringify(obj))
             .then(result=>{
                 if(result.data.code>0){
                     this.$toast("恭喜您注册成功,3秒后跳转至登录页面");
@@ -185,7 +189,9 @@ export default {
                 }else{
                     this.$messagebox("提示","注册失败")
                 }
+                this.canClick=true;
             })
+           }
         },
         //1 手机号验证
         checkPhone(){
